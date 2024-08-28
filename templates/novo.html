@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Jogoteca</title>
+    <!-- essa é a forma de importar o css, primeiro a pasta e depois o arquivo que esta dentro dela -->
+    <link rel="stylesheet"  href="{{ url_for('static', filename='bootstrap.css') }}">>
+</head>
+<body>
+    <div class="container">
+      {% with messages = get_flashed_messages() %}
+            {% if messages %} 
+                <ul id="messages" class="list-unstyled">
+                {% for message in messages %}
+                    <li class="alert alert-success">{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+      <div class="page-header">
+          <h1>{{ titulo }}</h1>
+      </div>
+      <!-- vai eviar sse formulario para a nova rora que é o criar,onde vai processar esse novo item -->
+      <form action="{{ url_for('criar') }}" method="post">
+        <fieldset>
+          {{ form.csrf_token() }}
+          <div class="form-group">
+            <!-- estou passando o formulário que eu criei no helprers, ele tem que ser dessa forma-->
+            {{ form.nome.label(class="form-label") }}
+            {{ form.nome(class="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ form.idade.label(class="form-label") }}
+            {{ form.idade(class="form-control") }}        
+          </div>
+          <div class="form-group">
+            {{ form.sexo.label(class="form-label") }}
+            {{ form.sexo(class="form-control") }}
+          </div>
+          <div>
+            {{ form.salvar(class="btn btn-primary") }}
+            <a class="btn btn-danger" href="{{ url_for('index') }}">Voltar</a>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+</body>
+</html>
